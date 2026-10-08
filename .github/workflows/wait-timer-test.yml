@@ -1,0 +1,24 @@
+name: Wait timer test
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: wait-timer-test
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  with-deployment:
+    runs-on: ubuntu-slim
+    environment: delay-test
+    steps:
+      - run: date --utc
+
+  without-deployment:
+    runs-on: ubuntu-slim
+    environment:
+      name: delay-test
+      deployment: false
+    steps:
+      - run: date --utc
